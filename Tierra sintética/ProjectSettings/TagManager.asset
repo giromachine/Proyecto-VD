@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Object
+  - Camera
   layers:
   - Default
   - TransparentFX
