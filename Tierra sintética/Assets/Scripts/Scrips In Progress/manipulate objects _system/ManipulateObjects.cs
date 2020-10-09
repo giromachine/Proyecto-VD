@@ -50,11 +50,15 @@ public class ManipulateObjects : MonoBehaviour
 
     void Detection()
     {
+        Debug.Log("detection");
+
         detected = true;
     }
 
     void NoDetection()
     {
+        Debug.Log("no detection");
+
         detected = false;
 
         if (taken)

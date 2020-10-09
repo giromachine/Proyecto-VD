@@ -49,6 +49,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""TakePhoto"",
+                    ""type"": ""Button"",
+                    ""id"": ""9403daa1-717f-4fbc-bcd3-d1144e73dbd5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -139,6 +147,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3fa17b81-7e6b-4289-b805-ced2686dc2eb"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TakePhoto"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -168,6 +187,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_RotationX = m_Player.FindAction("Rotation X", throwIfNotFound: true);
         m_Player_RotationY = m_Player.FindAction("Rotation Y", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_TakePhoto = m_Player.FindAction("TakePhoto", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -221,6 +241,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_RotationX;
     private readonly InputAction m_Player_RotationY;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_TakePhoto;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -229,6 +250,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @RotationX => m_Wrapper.m_Player_RotationX;
         public InputAction @RotationY => m_Wrapper.m_Player_RotationY;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @TakePhoto => m_Wrapper.m_Player_TakePhoto;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -250,6 +272,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @TakePhoto.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
+                @TakePhoto.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
+                @TakePhoto.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -266,6 +291,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @TakePhoto.started += instance.OnTakePhoto;
+                @TakePhoto.performed += instance.OnTakePhoto;
+                @TakePhoto.canceled += instance.OnTakePhoto;
             }
         }
     }
@@ -285,5 +313,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnRotationX(InputAction.CallbackContext context);
         void OnRotationY(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnTakePhoto(InputAction.CallbackContext context);
     }
 }
