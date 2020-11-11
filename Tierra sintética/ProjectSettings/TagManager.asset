@@ -4,8 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Object
-  - CameraObject
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -15,8 +14,8 @@ TagManager:
   - UI
   - 
   - 
-  - Player
-  - Object
+  - Wall
+  - 
   - 
   - 
   - 
