@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Networking;
 
@@ -9,14 +10,15 @@ public class ScreenShotHandler : MonoBehaviour
 
     public int resWidth = 3550;
     public int resHeight = 3300;
+    public int photoNumber;
 
     public bool takeHiResShot = false;
 
-    public static string ScreenShotName(int width, int height)
+    public static string ScreenShotName(int width, int height, int photoNumber)
     {
         return string.Format("{0}/screenshots/screen_{1}x{2}_{3}.png",
             Application.dataPath,
-            width, height, System.DateTime.Now.ToString("yyyy-mm-dd_HH-mm-ss"));
+            width, height, photoNumber);
     }
 
     public void TakeHiResShot()
@@ -29,6 +31,8 @@ public class ScreenShotHandler : MonoBehaviour
     {
         if (takeHiResShot)
         {
+            photoNumber = photoNumber + 1;
+
             RenderTexture rt = new RenderTexture(resWidth, resHeight, 24);
             myCamera.targetTexture = rt;
             Texture2D screenShot = new Texture2D(resWidth, resHeight, TextureFormat.RGB24, false);
@@ -39,10 +43,22 @@ public class ScreenShotHandler : MonoBehaviour
             RenderTexture.active = null;
             Destroy(rt);
             byte[] bytes = screenShot.EncodeToPNG();
-            string filename = ScreenShotName(resWidth, resHeight);
+            string filename = ScreenShotName(resWidth, resHeight, photoNumber);
             System.IO.File.WriteAllBytes(filename, bytes);
             Debug.Log(string.Format("Took screenshot to: {0}", filename));
             takeHiResShot = false;
+
+            Foo();
+
+            if(photoNumber == 10)
+            {
+                photoNumber = 0;
+            }
         }
+    }
+
+    public void Foo()
+    {
+        AssetDatabase.Refresh();
     }
 }

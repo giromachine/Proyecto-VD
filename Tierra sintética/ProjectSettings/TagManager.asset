@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Object
   - CameraObject
+  - Board
   layers:
   - Default
   - TransparentFX

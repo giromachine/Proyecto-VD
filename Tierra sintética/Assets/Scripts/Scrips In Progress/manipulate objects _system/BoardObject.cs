@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
-public class PhotographicCamera : MonoBehaviour
+public class BoardObject : MonoBehaviour
 {
     InputMaster _controls;
-
-    public GameObject screenShotHandler;
 
     bool detected;
     bool taken;
@@ -21,7 +19,6 @@ public class PhotographicCamera : MonoBehaviour
         _controls = new InputMaster();
 
         _controls.Player.Interact.performed += ctx => InteractAction(ctx);
-        _controls.Player.TakePhoto.performed += ctx => TakePhotoo(ctx);
     }
 
     private void OnEnable()
@@ -48,14 +45,6 @@ public class PhotographicCamera : MonoBehaviour
                 taken = false;
                 rig.useGravity = true;
             }
-        }
-    }
-
-    void TakePhotoo(InputAction.CallbackContext context)
-    {
-        if (taken)
-        {
-            screenShotHandler.GetComponent<ScreenShotHandler>().takeHiResShot = true;
         }
     }
 

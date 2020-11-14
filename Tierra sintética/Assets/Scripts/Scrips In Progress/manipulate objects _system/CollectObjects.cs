@@ -17,6 +17,11 @@ public class CollectObjects : MonoBehaviour
         {
             other.GetComponent("ManipulateObjects").SendMessage("Detection");
         }
+
+        if (other.tag == "Board")
+        {
+            other.GetComponent("BoardObject").SendMessage("Detection");
+        }
     }
 
 
@@ -30,6 +35,11 @@ public class CollectObjects : MonoBehaviour
         if (other.tag == "Object")
         {
             other.GetComponent("ManipulateObjects").SendMessage("NoDetection");
-        }        
+        }
+
+        if (other.tag == "Board")
+        {
+            other.GetComponent("BoardObject").SendMessage("NoDetection");
+        }
     }
 }
