@@ -51,6 +51,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""192bbfee-67f8-4c7e-aa82-bb086dfa6c36"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
                     ""name"": ""TakePhoto"",
                     ""type"": ""Button"",
                     ""id"": ""9403daa1-717f-4fbc-bcd3-d1144e73dbd5"",
@@ -158,6 +166,63 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""TakePhoto"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""af8821e8-2898-4cf3-93fb-37050849bb49"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Teclado y Ratón"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""e63c9ff9-ea10-483d-9b6d-228730177a06"",
+            ""actions"": [
+                {
+                    ""name"": ""LeftClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""66c18146-d94f-405b-9ba1-3fcac7c4a7d4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""8eba3c53-e553-4a15-9a1f-01895dfa44f2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""180dc731-4add-4a98-b7fb-1e8394eee1b6"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Teclado y Ratón"",
+                    ""action"": ""LeftClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c16518f6-acd8-4984-a671-4f77373618cb"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Teclado y Ratón"",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -187,7 +252,12 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_RotationX = m_Player.FindAction("Rotation X", throwIfNotFound: true);
         m_Player_RotationY = m_Player.FindAction("Rotation Y", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+        m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_TakePhoto = m_Player.FindAction("TakePhoto", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_LeftClick = m_Debug.FindAction("LeftClick", throwIfNotFound: true);
+        m_Debug_Escape = m_Debug.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -241,6 +311,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_RotationX;
     private readonly InputAction m_Player_RotationY;
     private readonly InputAction m_Player_Interact;
+    private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_TakePhoto;
     public struct PlayerActions
     {
@@ -250,6 +321,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @RotationX => m_Wrapper.m_Player_RotationX;
         public InputAction @RotationY => m_Wrapper.m_Player_RotationY;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
+        public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @TakePhoto => m_Wrapper.m_Player_TakePhoto;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
@@ -272,6 +344,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 @Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @TakePhoto.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
                 @TakePhoto.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
                 @TakePhoto.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
@@ -291,6 +366,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Interact.started += instance.OnInteract;
                 @Interact.performed += instance.OnInteract;
                 @Interact.canceled += instance.OnInteract;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
                 @TakePhoto.started += instance.OnTakePhoto;
                 @TakePhoto.performed += instance.OnTakePhoto;
                 @TakePhoto.canceled += instance.OnTakePhoto;
@@ -298,6 +376,47 @@ public class @InputMaster : IInputActionCollection, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private IDebugActions m_DebugActionsCallbackInterface;
+    private readonly InputAction m_Debug_LeftClick;
+    private readonly InputAction m_Debug_Escape;
+    public struct DebugActions
+    {
+        private @InputMaster m_Wrapper;
+        public DebugActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @LeftClick => m_Wrapper.m_Debug_LeftClick;
+        public InputAction @Escape => m_Wrapper.m_Debug_Escape;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void SetCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterface != null)
+            {
+                @LeftClick.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnLeftClick;
+                @LeftClick.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnLeftClick;
+                @LeftClick.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnLeftClick;
+                @Escape.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnEscape;
+                @Escape.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnEscape;
+                @Escape.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnEscape;
+            }
+            m_Wrapper.m_DebugActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @LeftClick.started += instance.OnLeftClick;
+                @LeftClick.performed += instance.OnLeftClick;
+                @LeftClick.canceled += instance.OnLeftClick;
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
+            }
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_TecladoyRatónSchemeIndex = -1;
     public InputControlScheme TecladoyRatónScheme
     {
@@ -313,6 +432,12 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnRotationX(InputAction.CallbackContext context);
         void OnRotationY(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
         void OnTakePhoto(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnLeftClick(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
 }

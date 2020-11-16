@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace ECM.Components
 {
@@ -14,6 +15,11 @@ namespace ECM.Components
     public class MouseLook : MonoBehaviour
     {
         #region EDITOR EXPOSED FIELDS
+
+        public InputMaster _control;
+
+        private bool onLeftClick = false;
+        private bool onEscape = false;
 
         [Tooltip("Should the mouse cursor be locked (eg: hidden)?")]
         [SerializeField]
@@ -175,8 +181,8 @@ namespace ECM.Components
 
         public virtual void LookRotation(CharacterMovement movement, Transform cameraTransform)
         {
-            var yaw = Input.GetAxis("Mouse X") * lateralSensitivity;
-            var pitch = Input.GetAxis("Mouse Y") * verticalSensitivity;
+            var yaw = _control.Player.RotationX.ReadValue<float>() * lateralSensitivity;
+            var pitch = _control.Player.RotationY.ReadValue<float>() * verticalSensitivity;
 
             var yawRotation = Quaternion.Euler(0.0f, yaw, 0.0f);
             var pitchRotation = Quaternion.Euler(-pitch, 0.0f, 0.0f);
@@ -237,11 +243,14 @@ namespace ECM.Components
 
         protected virtual void InternalLockUpdate()
         {
-            if (Input.GetKeyUp(unlockCursorKey))
+            if (onEscape) {
                 _isCursorLocked = false;
-            else if (Input.GetMouseButtonUp(0))
+                
+            }
+            else if (!onLeftClick) {
                 _isCursorLocked = true;
-
+                onEscape = false;
+            }
             if (_isCursorLocked)
             {
                 Cursor.lockState = CursorLockMode.Locked;
@@ -253,7 +262,6 @@ namespace ECM.Components
                 Cursor.visible = true;
             }
         }
-
         protected Quaternion ClampPitch(Quaternion q)
         {
             q.x /= q.w;
@@ -269,6 +277,13 @@ namespace ECM.Components
 
             return q;
         }
+
+        void Awake() {
+        _control = new InputMaster();
+
+        _control.Debug.LeftClick.performed += ctx => OnLeftClick(ctx);
+        _control.Debug.LeftClick.performed += ctx => OnEscape(ctx);
+    }
 
         #endregion
 
@@ -291,6 +306,26 @@ namespace ECM.Components
             minPitchAngle = _minPitchAngle;
             maxPitchAngle = _maxPitchAngle;
         }
+
+    void OnLeftClick(InputAction.CallbackContext context) {
+        onLeftClick = context.started;
+        // Debug.Log("click" + onLeftClick);
+    }
+
+    void OnEscape(InputAction.CallbackContext context) {
+        onEscape = context.started;
+        // Debug.Log("esc" + onEscape);
+    }
+
+    private void OnEnable()
+    {
+        _control.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _control.Disable();
+    }
         
         #endregion
     }
