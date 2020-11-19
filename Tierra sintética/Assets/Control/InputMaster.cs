@@ -65,6 +65,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b53b800-e3ea-4719-a614-06023900e501"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
                 }
             ],
             ""bindings"": [
@@ -177,6 +185,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""71d0a26e-d8e3-47bc-83a0-a72f2329becf"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Teclado y Ratón"",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -254,6 +273,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_TakePhoto = m_Player.FindAction("TakePhoto", throwIfNotFound: true);
+        m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_LeftClick = m_Debug.FindAction("LeftClick", throwIfNotFound: true);
@@ -313,6 +333,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_TakePhoto;
+    private readonly InputAction m_Player_Crouch;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -323,6 +344,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @TakePhoto => m_Wrapper.m_Player_TakePhoto;
+        public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -350,6 +372,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @TakePhoto.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
                 @TakePhoto.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
                 @TakePhoto.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
+                @Crouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Crouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @Crouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -372,6 +397,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @TakePhoto.started += instance.OnTakePhoto;
                 @TakePhoto.performed += instance.OnTakePhoto;
                 @TakePhoto.canceled += instance.OnTakePhoto;
+                @Crouch.started += instance.OnCrouch;
+                @Crouch.performed += instance.OnCrouch;
+                @Crouch.canceled += instance.OnCrouch;
             }
         }
     }
@@ -434,6 +462,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnTakePhoto(InputAction.CallbackContext context);
+        void OnCrouch(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {
