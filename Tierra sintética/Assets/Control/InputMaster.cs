@@ -59,17 +59,33 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": ""Press(behavior=2)""
                 },
                 {
-                    ""name"": ""TakePhoto"",
-                    ""type"": ""Button"",
-                    ""id"": ""9403daa1-717f-4fbc-bcd3-d1144e73dbd5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
                     ""name"": ""Crouch"",
                     ""type"": ""Button"",
                     ""id"": ""6b53b800-e3ea-4719-a614-06023900e501"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""RightClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""68970c33-e541-4993-a47f-e41f41fd82dd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""LeftClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""31858818-25b8-4307-89c1-89574ab8023f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)""
+                },
+                {
+                    ""name"": ""CameraMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""1da33e43-45e3-4f86-907a-c1acabef85b2"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press(behavior=2)""
@@ -166,17 +182,6 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3fa17b81-7e6b-4289-b805-ced2686dc2eb"",
-                    ""path"": ""<Keyboard>/t"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""TakePhoto"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""af8821e8-2898-4cf3-93fb-37050849bb49"",
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
@@ -194,6 +199,39 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Teclado y Ratón"",
                     ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""449b8a65-0944-4696-b53f-96cfc242007c"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9be2f546-f730-419d-9e43-34ae9ff3241d"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6eef04e8-486d-4474-a9c3-7b17f336038f"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""CameraMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -272,8 +310,10 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_RotationY = m_Player.FindAction("Rotation Y", throwIfNotFound: true);
         m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
-        m_Player_TakePhoto = m_Player.FindAction("TakePhoto", throwIfNotFound: true);
         m_Player_Crouch = m_Player.FindAction("Crouch", throwIfNotFound: true);
+        m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
+        m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
+        m_Player_CameraMenu = m_Player.FindAction("CameraMenu", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_LeftClick = m_Debug.FindAction("LeftClick", throwIfNotFound: true);
@@ -332,8 +372,10 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_RotationY;
     private readonly InputAction m_Player_Interact;
     private readonly InputAction m_Player_Jump;
-    private readonly InputAction m_Player_TakePhoto;
     private readonly InputAction m_Player_Crouch;
+    private readonly InputAction m_Player_RightClick;
+    private readonly InputAction m_Player_LeftClick;
+    private readonly InputAction m_Player_CameraMenu;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -343,8 +385,10 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @RotationY => m_Wrapper.m_Player_RotationY;
         public InputAction @Interact => m_Wrapper.m_Player_Interact;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
-        public InputAction @TakePhoto => m_Wrapper.m_Player_TakePhoto;
         public InputAction @Crouch => m_Wrapper.m_Player_Crouch;
+        public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
+        public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
+        public InputAction @CameraMenu => m_Wrapper.m_Player_CameraMenu;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -369,12 +413,18 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnJump;
-                @TakePhoto.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
-                @TakePhoto.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
-                @TakePhoto.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnTakePhoto;
                 @Crouch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
                 @Crouch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
                 @Crouch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCrouch;
+                @RightClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
+                @RightClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
+                @RightClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnRightClick;
+                @LeftClick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                @LeftClick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                @LeftClick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLeftClick;
+                @CameraMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraMenu;
+                @CameraMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraMenu;
+                @CameraMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraMenu;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -394,12 +444,18 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @TakePhoto.started += instance.OnTakePhoto;
-                @TakePhoto.performed += instance.OnTakePhoto;
-                @TakePhoto.canceled += instance.OnTakePhoto;
                 @Crouch.started += instance.OnCrouch;
                 @Crouch.performed += instance.OnCrouch;
                 @Crouch.canceled += instance.OnCrouch;
+                @RightClick.started += instance.OnRightClick;
+                @RightClick.performed += instance.OnRightClick;
+                @RightClick.canceled += instance.OnRightClick;
+                @LeftClick.started += instance.OnLeftClick;
+                @LeftClick.performed += instance.OnLeftClick;
+                @LeftClick.canceled += instance.OnLeftClick;
+                @CameraMenu.started += instance.OnCameraMenu;
+                @CameraMenu.performed += instance.OnCameraMenu;
+                @CameraMenu.canceled += instance.OnCameraMenu;
             }
         }
     }
@@ -461,8 +517,10 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnRotationY(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnTakePhoto(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+        void OnRightClick(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
+        void OnCameraMenu(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {

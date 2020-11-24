@@ -46,17 +46,33 @@
                     "interactions": "Press(behavior=2)"
                 },
                 {
-                    "name": "TakePhoto",
-                    "type": "Button",
-                    "id": "9403daa1-717f-4fbc-bcd3-d1144e73dbd5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
                     "name": "Crouch",
                     "type": "Button",
                     "id": "6b53b800-e3ea-4719-a614-06023900e501",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "RightClick",
+                    "type": "Button",
+                    "id": "68970c33-e541-4993-a47f-e41f41fd82dd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "LeftClick",
+                    "type": "Button",
+                    "id": "31858818-25b8-4307-89c1-89574ab8023f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Press(behavior=2)"
+                },
+                {
+                    "name": "CameraMenu",
+                    "type": "Button",
+                    "id": "1da33e43-45e3-4f86-907a-c1acabef85b2",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press(behavior=2)"
@@ -153,17 +169,6 @@
                 },
                 {
                     "name": "",
-                    "id": "3fa17b81-7e6b-4289-b805-ced2686dc2eb",
-                    "path": "<Keyboard>/t",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TakePhoto",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "af8821e8-2898-4cf3-93fb-37050849bb49",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -181,6 +186,39 @@
                     "processors": "",
                     "groups": "Teclado y Ratón",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "449b8a65-0944-4696-b53f-96cfc242007c",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9be2f546-f730-419d-9e43-34ae9ff3241d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6eef04e8-486d-4474-a9c3-7b17f336038f",
+                    "path": "<Keyboard>/m",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CameraMenu",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -21,7 +21,9 @@ public class PhotographicCamera : MonoBehaviour
         _controls = new InputMaster();
 
         _controls.Player.Interact.performed += ctx => InteractAction(ctx);
-        _controls.Player.TakePhoto.performed += ctx => TakePhotoo(ctx);
+        _controls.Player.LeftClick.performed += ctx => TakePhotoo(ctx);
+        _controls.Player.RightClick.performed += ctx => CameraAim(ctx);
+        _controls.Player.CameraMenu.performed += ctx => Menu(ctx);
     }
 
     private void OnEnable()
@@ -57,6 +59,16 @@ public class PhotographicCamera : MonoBehaviour
         {
             screenShotHandler.GetComponent<ScreenShotHandler>().takeHiResShot = true;
         }
+    }
+
+    void CameraAim(InputAction.CallbackContext context)
+    {
+
+    }
+
+    void Menu(InputAction.CallbackContext context)
+    {
+
     }
 
     void Detection()
