@@ -1,0 +1,18 @@
+title: Jorge
+tags: 
+colorID: 8
+position: 448,154
+---
+<<if visited("Jorge") is false>> 
+    Hola Michel ¿Donde has estado?... No te encontraba
+<<endif>> 
+
+[[ Estoy en el restaurante todo el tiempo |restaurante]]
+===
+title: restaurante
+tags: 
+colorID: 0
+position: 664,418
+---
+¿El de comida rapida?... con razón nunca he ido
+===

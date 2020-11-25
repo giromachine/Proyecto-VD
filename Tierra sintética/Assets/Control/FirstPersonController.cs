@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using Microsoft.CSharp.RuntimeBinder;
+using System.Collections;
 using System.Collections.Generic;
 using ECM.Controllers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using SensorToolkit;
+using Yarn;
 
 public sealed class FirstPersonController : BaseFirstPersonController
 {
@@ -10,11 +13,15 @@ public sealed class FirstPersonController : BaseFirstPersonController
     private bool onJump = false;
     private bool onCrouch = false;
 
-    public float cameraStandingHeight = 0.5f;
-    public float cameraCrouchingHeight = -0.5f;
+    public float cameraStandingHeightDiference = 1.0f;
+    public float cameraCrouchingHeightDiference = 0.5f;
+
+
+    [SerializeField] 
 
     public Transform modelTransform { get; private set; }
 
+    [SerializeField] public RaySensor viewSensor;
     [SerializeField] private Animator AnimatorController;
     
     public override void Awake() {
@@ -27,6 +34,9 @@ public sealed class FirstPersonController : BaseFirstPersonController
         _control = new InputMaster();
         _control.Player.Jump.performed += ctx => OnJump(ctx);
         _control.Player.Crouch.performed += ctx => OnCrouch(ctx);
+        _control.Player.Interact.started += ctx => OnInteract(ctx);
+
+        viewSensor = GetComponentInChildren<RaySensor>();
 
         modelTransform = transform.Find("Model");
         {
@@ -38,6 +48,7 @@ public sealed class FirstPersonController : BaseFirstPersonController
             }
         }
     }
+
     protected override void Animate()
         {
             // Add animator related code here...
@@ -53,14 +64,15 @@ public sealed class FirstPersonController : BaseFirstPersonController
                 new Vector3(1.0f, yScale, 1.0f), 5.0f * Time.deltaTime);
 
             
+            
             if (isCrouching) {
-                cameraPivotTransform.localPosition = new Vector3(0.0f, cameraCrouchingHeight, 0.0f);
-                modelTransform.localPosition = cameraPivotTransform.localPosition;
+                cameraPivotTransform.localPosition = Vector3.MoveTowards(cameraPivotTransform.localPosition, new Vector3(0.0f, 0.5f, 0.0f), 5.0f * Time.deltaTime);
+                modelTransform.localPosition = (cameraPivotTransform.localPosition - new Vector3(0.0f, 0.0f, 0.0f));
                 
                 // AnimatorController.SetBool("Crouching", true);
             } else { 
-                cameraPivotTransform.localPosition = new Vector3(0.0f, cameraStandingHeight, 0.0f);
-                modelTransform.localPosition = new Vector3(0.0f, (cameraStandingHeight - 0.5f) , 0.0f);
+                cameraPivotTransform.localPosition = new Vector3(0.0f, 1.5f, 0.0f);
+                modelTransform.localPosition = new Vector3(0.0f, 1.0f, 0.0f);
                 // AnimatorController.SetBool("Crouching", false);  
                 }
         }
@@ -92,7 +104,22 @@ public sealed class FirstPersonController : BaseFirstPersonController
 
     void OnCrouch(InputAction.CallbackContext context) {
         onCrouch = context.ReadValueAsButton();
-        Debug.Log(onCrouch);
+        // Debug.Log(onCrouch);
+    }
+
+    void OnInteract(InputAction.CallbackContext context) {
+
+        Debug.Log(viewSensor.IsObstructed);
+
+        if (viewSensor.IsObstructed ) {
+            var npcs = viewSensor.GetDetectedByComponent<Yarn.Unity.NPC>();
+            var target = npcs.Find(delegate (Yarn.Unity.NPC p) { 
+                return string.IsNullOrEmpty(p.talkToNode) == false;
+                });
+            if (target != null) {
+                FindObjectOfType<Yarn.Unity.DialogueRunner>().StartDialogue(target.talkToNode);
+            }
+        }
     }
 
     private void OnEnable()

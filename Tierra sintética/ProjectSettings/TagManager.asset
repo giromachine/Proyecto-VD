@@ -7,6 +7,7 @@ TagManager:
   - Object
   - CameraObject
   - Board
+  - NPC
   layers:
   - Default
   - TransparentFX
