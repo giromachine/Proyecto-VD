@@ -15,7 +15,9 @@ public class ScreenShotHandler : MonoBehaviour
 
     public bool takeHiResShot = false;
 
-    public Image img;
+    public Image img1,img2,img3,img4;
+
+    private Image imagen;
 
     public void Start()
     {
@@ -39,7 +41,7 @@ public class ScreenShotHandler : MonoBehaviour
     {
         if (takeHiResShot)
         {
-            Debug.Log("Tomando fotos");
+            ScreenShot();
         }
     }
 
@@ -48,6 +50,15 @@ public class ScreenShotHandler : MonoBehaviour
     void ScreenShot()
     {
         photoNumber = photoNumber + 1;
+
+        if (photoNumber == 1)
+            imagen = img1;
+        if (photoNumber == 2)
+            imagen = img2;
+        if (photoNumber == 3)
+            imagen = img3;
+        if (photoNumber == 4)
+            imagen = img4;
 
         RenderTexture rt = new RenderTexture(resWidth, resHeight, 24);
         myCamera.targetTexture = rt;
@@ -58,7 +69,7 @@ public class ScreenShotHandler : MonoBehaviour
         screenShot.Apply();
         //
         Sprite sprite = Sprite.Create(screenShot, new Rect(0, 0, screenShot.width, screenShot.height), new Vector2(.5f, .5f));
-        img.sprite = sprite;
+        imagen.sprite = sprite;
         //
         myCamera.targetTexture = null;
         RenderTexture.active = null;
@@ -71,7 +82,7 @@ public class ScreenShotHandler : MonoBehaviour
         takeHiResShot = false;
 
 
-        if (photoNumber == 10)
+        if (photoNumber == 4)
         {
             photoNumber = 0;
         }

@@ -11,10 +11,15 @@ public class PhotographicCamera : MonoBehaviour
 
     bool detected;
     bool taken;
+    bool pointingCamera;
+    bool menuCamera = false;
 
     public Transform target;
+    public Transform cameraPointing;
     public float speed = 15f;
     public Rigidbody rig;
+
+    public GameObject canvasCameraMenu;
 
     void Awake()
     {
@@ -38,8 +43,7 @@ public class PhotographicCamera : MonoBehaviour
 
 
     void InteractAction(InputAction.CallbackContext context)
-    {
-        
+    {       
         if (detected)
         {
             if (!taken)
@@ -56,22 +60,44 @@ public class PhotographicCamera : MonoBehaviour
 
     void TakePhotoo(InputAction.CallbackContext context)
     {
-        Debug.Log("TakePhoto");
-
-        //if (taken)
-        //{
-            //screenShotHandler.GetComponent<ScreenShotHandler>().takeHiResShot = true;
-        //}
+        if (taken && !menuCamera)
+        {
+            screenShotHandler.GetComponent<ScreenShotHandler>().takeHiResShot = true;
+        }
     }
 
     void CameraAim(InputAction.CallbackContext context)
     {
-        Debug.Log("CameraAim");
+        if (taken)
+        {
+            if (!pointingCamera)
+            {
+                pointingCamera = true;
+            }
+            else
+            {
+                pointingCamera = false;
+            }
+        }
     }
 
     void Menu(InputAction.CallbackContext context)
     {
-        Debug.Log("Menu");
+        if (taken)
+        {
+            if (!menuCamera)
+            {
+                Debug.Log("Menu");
+                menuCamera = true;
+                canvasCameraMenu.SetActive(true);
+            }
+            else
+            {
+                Debug.Log("NoMenu");
+                menuCamera = false;
+                canvasCameraMenu.SetActive(false);
+            }           
+        }
     }
 
     void Detection()
@@ -94,9 +120,18 @@ public class PhotographicCamera : MonoBehaviour
     {
         if (taken)
         {
-            this.transform.position = target.position;
-            this.transform.rotation = target.rotation;
             rig.useGravity = false;
+
+            if (!pointingCamera)
+            {
+                this.transform.position = target.position;
+                this.transform.rotation = target.rotation;
+            }
+            else
+            {
+                this.transform.position = cameraPointing.position;
+                this.transform.rotation = cameraPointing.rotation;
+            }
         }
     }
 }
