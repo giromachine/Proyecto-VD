@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PhotographicCamera : MonoBehaviour
 {
-    InputMaster _controls;
+    InputMaster _control;
 
     public GameObject screenShotHandler;
 
@@ -18,27 +18,28 @@ public class PhotographicCamera : MonoBehaviour
 
     void Awake()
     {
-        _controls = new InputMaster();
+        _control = new InputMaster();
 
-        _controls.Player.Interact.performed += ctx => InteractAction(ctx);
-        _controls.Player.LeftClick.performed += ctx => TakePhotoo(ctx);
-        _controls.Player.RightClick.performed += ctx => CameraAim(ctx);
-        _controls.Player.CameraMenu.performed += ctx => Menu(ctx);
+        _control.Player.Interact.performed += ctx => InteractAction(ctx);
+        _control.Player.LeftClick.performed += ctx => TakePhotoo(ctx);
+        _control.Player.RightClick.performed += ctx => CameraAim(ctx);
+        _control.Player.CameraMenu.performed += ctx => Menu(ctx);
     }
 
     private void OnEnable()
     {
-        _controls.Enable();
+        _control.Enable();
     }
 
     private void OnDisable()
     {
-        _controls.Disable();
+        _control.Disable();
     }
 
 
     void InteractAction(InputAction.CallbackContext context)
     {
+        
         if (detected)
         {
             if (!taken)
@@ -55,33 +56,31 @@ public class PhotographicCamera : MonoBehaviour
 
     void TakePhotoo(InputAction.CallbackContext context)
     {
-        if (taken)
-        {
-            screenShotHandler.GetComponent<ScreenShotHandler>().takeHiResShot = true;
-        }
+        Debug.Log("TakePhoto");
+
+        //if (taken)
+        //{
+            //screenShotHandler.GetComponent<ScreenShotHandler>().takeHiResShot = true;
+        //}
     }
 
     void CameraAim(InputAction.CallbackContext context)
     {
-
+        Debug.Log("CameraAim");
     }
 
     void Menu(InputAction.CallbackContext context)
     {
-
+        Debug.Log("Menu");
     }
 
     void Detection()
     {
-        Debug.Log("detection");
-
         detected = true;
     }
 
     void NoDetection()
     {
-        Debug.Log("no detection");
-
         detected = false;
 
         if (taken)
