@@ -13,6 +13,8 @@ public sealed class FirstPersonController : BaseFirstPersonController
     private bool onJump = false;
     private bool onCrouch = false;
 
+    private bool onDialogue = false;
+
     public float cameraStandingHeightDiference = 1.0f;
     public float cameraCrouchingHeightDiference = 0.5f;
 
@@ -97,6 +99,10 @@ public sealed class FirstPersonController : BaseFirstPersonController
         // Replace the above code with your custom input code
     }
 
+    public void OnDialogueEnd() {
+            onDialogue = false;
+    }
+
     void OnJump(InputAction.CallbackContext context) {
         onJump = context.ReadValueAsButton();
         // Debug.Log(onJump);
@@ -111,7 +117,7 @@ public sealed class FirstPersonController : BaseFirstPersonController
 
         Debug.Log(viewSensor.IsObstructed);
 
-        if (viewSensor.IsObstructed ) {
+        if (viewSensor.IsObstructed && !onDialogue) {
             var npcs = viewSensor.GetDetectedByComponent<Yarn.Unity.NPC>();
             var target = npcs.Find(delegate (Yarn.Unity.NPC p) { 
                 return string.IsNullOrEmpty(p.talkToNode) == false;
@@ -119,6 +125,8 @@ public sealed class FirstPersonController : BaseFirstPersonController
             if (target != null) {
                 FindObjectOfType<Yarn.Unity.DialogueRunner>().StartDialogue(target.talkToNode);
             }
+
+            onDialogue = true;
         }
     }
 

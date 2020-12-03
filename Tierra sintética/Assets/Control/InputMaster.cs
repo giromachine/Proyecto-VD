@@ -89,6 +89,30 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""1)Button"",
+                    ""type"": ""Button"",
+                    ""id"": ""77cf3f9f-bbe2-44e7-ad54-64cad94ce9a5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""2)Button"",
+                    ""type"": ""Button"",
+                    ""id"": ""a5d0bec1-d87c-43e2-b49d-398e8e0f0614"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""3)Button"",
+                    ""type"": ""Button"",
+                    ""id"": ""7be14338-0fa3-4e9b-8b15-24f289520741"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -234,6 +258,39 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""CameraMenu"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""298ac0a1-df9f-4f20-a5e0-44ebd5821d0a"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""1)Button"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5f6eddaf-02c3-44c6-9765-86f58c09e0a8"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""2)Button"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""94d32e11-c6b5-4789-a36a-4724e4ccdf0a"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""3)Button"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -314,6 +371,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
         m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
         m_Player_CameraMenu = m_Player.FindAction("CameraMenu", throwIfNotFound: true);
+        m_Player__1Button = m_Player.FindAction("1)Button", throwIfNotFound: true);
+        m_Player__2Button = m_Player.FindAction("2)Button", throwIfNotFound: true);
+        m_Player__3Button = m_Player.FindAction("3)Button", throwIfNotFound: true);
         // Debug
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_LeftClick = m_Debug.FindAction("LeftClick", throwIfNotFound: true);
@@ -376,6 +436,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_RightClick;
     private readonly InputAction m_Player_LeftClick;
     private readonly InputAction m_Player_CameraMenu;
+    private readonly InputAction m_Player__1Button;
+    private readonly InputAction m_Player__2Button;
+    private readonly InputAction m_Player__3Button;
     public struct PlayerActions
     {
         private @InputMaster m_Wrapper;
@@ -389,6 +452,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
         public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
         public InputAction @CameraMenu => m_Wrapper.m_Player_CameraMenu;
+        public InputAction @_1Button => m_Wrapper.m_Player__1Button;
+        public InputAction @_2Button => m_Wrapper.m_Player__2Button;
+        public InputAction @_3Button => m_Wrapper.m_Player__3Button;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -425,6 +491,15 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @CameraMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraMenu;
                 @CameraMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraMenu;
                 @CameraMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraMenu;
+                @_1Button.started -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1Button;
+                @_1Button.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1Button;
+                @_1Button.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1Button;
+                @_2Button.started -= m_Wrapper.m_PlayerActionsCallbackInterface.On_2Button;
+                @_2Button.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.On_2Button;
+                @_2Button.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.On_2Button;
+                @_3Button.started -= m_Wrapper.m_PlayerActionsCallbackInterface.On_3Button;
+                @_3Button.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.On_3Button;
+                @_3Button.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.On_3Button;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -456,6 +531,15 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @CameraMenu.started += instance.OnCameraMenu;
                 @CameraMenu.performed += instance.OnCameraMenu;
                 @CameraMenu.canceled += instance.OnCameraMenu;
+                @_1Button.started += instance.On_1Button;
+                @_1Button.performed += instance.On_1Button;
+                @_1Button.canceled += instance.On_1Button;
+                @_2Button.started += instance.On_2Button;
+                @_2Button.performed += instance.On_2Button;
+                @_2Button.canceled += instance.On_2Button;
+                @_3Button.started += instance.On_3Button;
+                @_3Button.performed += instance.On_3Button;
+                @_3Button.canceled += instance.On_3Button;
             }
         }
     }
@@ -521,6 +605,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnLeftClick(InputAction.CallbackContext context);
         void OnCameraMenu(InputAction.CallbackContext context);
+        void On_1Button(InputAction.CallbackContext context);
+        void On_2Button(InputAction.CallbackContext context);
+        void On_3Button(InputAction.CallbackContext context);
     }
     public interface IDebugActions
     {

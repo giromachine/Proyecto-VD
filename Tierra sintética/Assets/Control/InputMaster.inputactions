@@ -76,6 +76,30 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "1)Button",
+                    "type": "Button",
+                    "id": "77cf3f9f-bbe2-44e7-ad54-64cad94ce9a5",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "2)Button",
+                    "type": "Button",
+                    "id": "a5d0bec1-d87c-43e2-b49d-398e8e0f0614",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "3)Button",
+                    "type": "Button",
+                    "id": "7be14338-0fa3-4e9b-8b15-24f289520741",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -219,6 +243,39 @@
                     "processors": "",
                     "groups": "Teclado y Ratón",
                     "action": "CameraMenu",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "298ac0a1-df9f-4f20-a5e0-44ebd5821d0a",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "1)Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5f6eddaf-02c3-44c6-9765-86f58c09e0a8",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "2)Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "94d32e11-c6b5-4789-a36a-4724e4ccdf0a",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "3)Button",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
