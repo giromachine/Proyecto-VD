@@ -1,4 +1,4 @@
-﻿using Microsoft.CSharp.RuntimeBinder;
+using Microsoft.CSharp.RuntimeBinder;
 using System.Collections;
 using System.Collections.Generic;
 using ECM.Controllers;
@@ -7,23 +7,22 @@ using UnityEngine.InputSystem;
 using SensorToolkit;
 using Yarn;
 
-public sealed class FirstPersonController : BaseFirstPersonController
+public class FirstPersonController : BaseFirstPersonController
 {
     InputMaster _control;
     private bool onJump = false;
     private bool onCrouch = false;
-
     private bool onDialogue = false;
 
     public float cameraStandingHeightDiference = 1.0f;
     public float cameraCrouchingHeightDiference = 0.5f;
 
 
-    [SerializeField] 
+    [SerializeField] private WorkBench workBenchState;
 
     public Transform modelTransform { get; private set; }
 
-    [SerializeField] public RaySensor viewSensor;
+    [SerializeField] private RaySensor viewSensor;
     [SerializeField] private Animator AnimatorController;
     
     public override void Awake() {
@@ -39,6 +38,7 @@ public sealed class FirstPersonController : BaseFirstPersonController
         _control.Player.Interact.started += ctx => OnInteract(ctx);
 
         viewSensor = GetComponentInChildren<RaySensor>();
+        workBenchState = GameObject.FindGameObjectWithTag("WorkBench").GetComponent<WorkBench>();
 
         modelTransform = transform.Find("Model");
         {
@@ -115,21 +115,30 @@ public sealed class FirstPersonController : BaseFirstPersonController
 
     void OnInteract(InputAction.CallbackContext context) {
 
-        Debug.Log(viewSensor.IsObstructed);
-
-        if (viewSensor.IsObstructed && !onDialogue) {
-            var npcs = viewSensor.GetDetectedByComponent<Yarn.Unity.NPC>();
-            var target = npcs.Find(delegate (Yarn.Unity.NPC p) { 
+        if (viewSensor.IsObstructed) {
+            if (!onDialogue) {
+                var npcs = viewSensor.GetDetectedByComponent<Yarn.Unity.NPC>();
+                var target = npcs.Find(delegate (Yarn.Unity.NPC p) { 
+                
                 return string.IsNullOrEmpty(p.talkToNode) == false;
                 });
-            if (target != null) {
-                FindObjectOfType<Yarn.Unity.DialogueRunner>().StartDialogue(target.talkToNode);
+                if (target != null) {
+                    FindObjectOfType<Yarn.Unity.DialogueRunner>().StartDialogue(target.talkToNode);
+                }
+                onDialogue = true;
             }
+            
 
-            onDialogue = true;
+            if(workBenchState._onWorkBench) {
+                workBenchState.OnWorkBenchState(false);
+            }
+            if(viewSensor.ObstructedBy.gameObject.tag == "WorkBench" || !workBenchState._onWorkBench) {
+                Debug.Log(viewSensor.ObstructedBy.gameObject.tag);
+                workBenchState.StartWorkBenchState();
+            }
+            
         }
     }
-
     private void OnEnable()
     {
         _control.Enable();

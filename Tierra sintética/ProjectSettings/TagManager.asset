@@ -8,6 +8,7 @@ TagManager:
   - CameraObject
   - Board
   - NPC
+  - WorkBench
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - 
   - Player
   - Object
-  - 
+  - Sensor
   - 
   - 
   - 
