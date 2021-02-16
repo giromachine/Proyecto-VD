@@ -91,6 +91,14 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""MiddleButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""b5ad7080-8d8a-4195-bf8d-8a32aee41590"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""1)Button"",
                     ""type"": ""Button"",
                     ""id"": ""77cf3f9f-bbe2-44e7-ad54-64cad94ce9a5"",
@@ -291,6 +299,17 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""action"": ""3)Button"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b21a8f4b-8af6-4f46-9c90-f85311b1f0c9"",
+                    ""path"": ""<Mouse>/middleButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Teclado y Ratón"",
+                    ""action"": ""MiddleButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -371,6 +390,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Player_RightClick = m_Player.FindAction("RightClick", throwIfNotFound: true);
         m_Player_LeftClick = m_Player.FindAction("LeftClick", throwIfNotFound: true);
         m_Player_CameraMenu = m_Player.FindAction("CameraMenu", throwIfNotFound: true);
+        m_Player_MiddleButton = m_Player.FindAction("MiddleButton", throwIfNotFound: true);
         m_Player__1Button = m_Player.FindAction("1)Button", throwIfNotFound: true);
         m_Player__2Button = m_Player.FindAction("2)Button", throwIfNotFound: true);
         m_Player__3Button = m_Player.FindAction("3)Button", throwIfNotFound: true);
@@ -436,6 +456,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_RightClick;
     private readonly InputAction m_Player_LeftClick;
     private readonly InputAction m_Player_CameraMenu;
+    private readonly InputAction m_Player_MiddleButton;
     private readonly InputAction m_Player__1Button;
     private readonly InputAction m_Player__2Button;
     private readonly InputAction m_Player__3Button;
@@ -452,6 +473,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         public InputAction @RightClick => m_Wrapper.m_Player_RightClick;
         public InputAction @LeftClick => m_Wrapper.m_Player_LeftClick;
         public InputAction @CameraMenu => m_Wrapper.m_Player_CameraMenu;
+        public InputAction @MiddleButton => m_Wrapper.m_Player_MiddleButton;
         public InputAction @_1Button => m_Wrapper.m_Player__1Button;
         public InputAction @_2Button => m_Wrapper.m_Player__2Button;
         public InputAction @_3Button => m_Wrapper.m_Player__3Button;
@@ -491,6 +513,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @CameraMenu.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraMenu;
                 @CameraMenu.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraMenu;
                 @CameraMenu.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnCameraMenu;
+                @MiddleButton.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMiddleButton;
+                @MiddleButton.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMiddleButton;
+                @MiddleButton.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMiddleButton;
                 @_1Button.started -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1Button;
                 @_1Button.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1Button;
                 @_1Button.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.On_1Button;
@@ -531,6 +556,9 @@ public class @InputMaster : IInputActionCollection, IDisposable
                 @CameraMenu.started += instance.OnCameraMenu;
                 @CameraMenu.performed += instance.OnCameraMenu;
                 @CameraMenu.canceled += instance.OnCameraMenu;
+                @MiddleButton.started += instance.OnMiddleButton;
+                @MiddleButton.performed += instance.OnMiddleButton;
+                @MiddleButton.canceled += instance.OnMiddleButton;
                 @_1Button.started += instance.On_1Button;
                 @_1Button.performed += instance.On_1Button;
                 @_1Button.canceled += instance.On_1Button;
@@ -605,6 +633,7 @@ public class @InputMaster : IInputActionCollection, IDisposable
         void OnRightClick(InputAction.CallbackContext context);
         void OnLeftClick(InputAction.CallbackContext context);
         void OnCameraMenu(InputAction.CallbackContext context);
+        void OnMiddleButton(InputAction.CallbackContext context);
         void On_1Button(InputAction.CallbackContext context);
         void On_2Button(InputAction.CallbackContext context);
         void On_3Button(InputAction.CallbackContext context);

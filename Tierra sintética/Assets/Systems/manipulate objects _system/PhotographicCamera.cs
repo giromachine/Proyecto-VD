@@ -21,6 +21,14 @@ public class PhotographicCamera : MonoBehaviour
 
     public GameObject canvasCameraMenu;
 
+    public int zoom = 0;
+    int initialZoom;
+
+    void start()
+    {
+        initialZoom = zoom;
+    }
+
     void Awake()
     {
         _control = new InputMaster();
@@ -29,6 +37,7 @@ public class PhotographicCamera : MonoBehaviour
         _control.Player.LeftClick.performed += ctx => TakePhotoo(ctx);
         _control.Player.RightClick.performed += ctx => CameraAim(ctx);
         _control.Player.CameraMenu.performed += ctx => Menu(ctx);
+        _control.Player.MiddleButton.performed += ctx => ZoomInOut(ctx);
     }
 
     private void OnEnable()
@@ -63,6 +72,22 @@ public class PhotographicCamera : MonoBehaviour
         if (taken && !menuCamera)
         {
             screenShotHandler.GetComponent<ScreenShotHandler>().takeHiResShot = true;
+        }
+    }
+
+    void ZoomInOut(InputAction.CallbackContext context)
+    {
+        
+        if (taken && !menuCamera)
+        {
+            if (zoom <= 1)
+            {
+                zoom += 1;
+            }
+            else
+            {
+                zoom = initialZoom;
+            }            
         }
     }
 

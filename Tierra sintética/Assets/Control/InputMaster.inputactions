@@ -78,6 +78,14 @@
                     "interactions": ""
                 },
                 {
+                    "name": "MiddleButton",
+                    "type": "Button",
+                    "id": "b5ad7080-8d8a-4195-bf8d-8a32aee41590",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "1)Button",
                     "type": "Button",
                     "id": "77cf3f9f-bbe2-44e7-ad54-64cad94ce9a5",
@@ -276,6 +284,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "3)Button",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b21a8f4b-8af6-4f46-9c90-f85311b1f0c9",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Teclado y Ratón",
+                    "action": "MiddleButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
