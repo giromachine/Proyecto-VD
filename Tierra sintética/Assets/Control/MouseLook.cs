@@ -326,12 +326,12 @@ namespace ECM.Components
 
     private void OnEnable()
     {
-        _control.Debug.Enable();
+        _control.Enable();
     }
 
     private void OnDisable()
     {
-        _control.Debug.Disable();
+        _control.Disable();
     }
         
         #endregion
