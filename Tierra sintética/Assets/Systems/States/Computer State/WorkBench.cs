@@ -1,10 +1,11 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using SensorToolkit;
 using UnityEngine.InputSystem;
 
-public class WorkBench : ECM.Components.MouseLook
+public class WorkBench : MonoBehaviour
 {
     public Transform wbHeadPosition;
     public GameObject player;
@@ -26,10 +27,11 @@ public class WorkBench : ECM.Components.MouseLook
         
         //set up 
         _onWorkBench = true;
-        SetCursorLock(false);
+        player.GetComponent<ECM.Components.MouseLook>().SetCursorLock(false);
         player.GetComponent<Collider>().enabled = false;
         player.GetComponent<ECM.Components.MouseLook>().enabled = false;
         player.GetComponent<FirstPersonController>().enabled = false;
+        player.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
         //movimiento
         LeanTween.moveLocal(player, wbHeadPosition.position, 1.0f).setEaseOutQuad();
@@ -43,7 +45,7 @@ public class WorkBench : ECM.Components.MouseLook
         _onWorkBench = value;
         if (!_onWorkBench) {
             //Quiting set up 
-            SetCursorLock(true);
+            player.GetComponent<ECM.Components.MouseLook>().SetCursorLock(true);
             player.GetComponent<Collider>().enabled = true;
             player.GetComponent<ECM.Components.MouseLook>().enabled = true;
             player.GetComponent<FirstPersonController>().enabled = true; 

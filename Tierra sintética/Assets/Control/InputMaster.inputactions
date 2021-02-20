@@ -310,7 +310,7 @@
                     "id": "66c18146-d94f-405b-9ba1-3fcac7c4a7d4",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": ""
                 },
                 {
                     "name": "Escape",
@@ -318,7 +318,7 @@
                     "id": "8eba3c53-e553-4a15-9a1f-01895dfa44f2",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Press"
+                    "interactions": ""
                 }
             ],
             "bindings": [

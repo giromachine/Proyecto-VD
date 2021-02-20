@@ -254,7 +254,7 @@ namespace ECM.Components
                 _isCursorLocked = false;
                 
             }
-            else if (!onLeftClick) {
+            else if (!onLeftClick && FindObjectOfType<TableOfClues>().state == TableOfCluesState.OUTSTATE) {
                 _isCursorLocked = true;
                 onEscape = false;
             }
@@ -286,8 +286,8 @@ namespace ECM.Components
         }
 
         void Awake() {
-        _control = new InputMaster();
 
+        _control = new InputMaster();
         _control.Debug.LeftClick.performed += ctx => OnLeftClick(ctx);
         _control.Debug.LeftClick.performed += ctx => OnEscape(ctx);
     }
@@ -321,17 +321,18 @@ namespace ECM.Components
 
     void OnEscape(InputAction.CallbackContext context) {
         onEscape = context.started;
-        Debug.Log("esc" + onEscape);
     }
 
     private void OnEnable()
     {
-        _control.Enable();
+        _control.Debug.Enable();
+        _control.Player.Enable();
     }
 
     private void OnDisable()
     {
-        _control.Disable();
+        _control.Debug.Disable();
+        _control.Player.Disable();
     }
         
         #endregion

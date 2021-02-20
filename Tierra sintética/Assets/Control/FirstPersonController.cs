@@ -18,7 +18,7 @@ public class FirstPersonController : BaseFirstPersonController
     public float cameraCrouchingHeightDiference = 0.5f;
 
 
-    [SerializeField] private WorkBench workBenchState;
+    
 
     public Transform modelTransform { get; private set; }
 
@@ -38,7 +38,7 @@ public class FirstPersonController : BaseFirstPersonController
         _control.Player.Interact.started += ctx => OnInteract(ctx);
 
         viewSensor = GetComponentInChildren<RaySensor>();
-        workBenchState = GameObject.FindGameObjectWithTag("WorkBench").GetComponent<WorkBench>();
+        
 
         modelTransform = transform.Find("Model");
         {
@@ -113,7 +113,7 @@ public class FirstPersonController : BaseFirstPersonController
         // Debug.Log(onCrouch);
     }
 
-    void OnInteract(InputAction.CallbackContext context) {
+    private void OnInteract(InputAction.CallbackContext context) {
 
         if (viewSensor.IsObstructed) {
             if (!onDialogue) {
@@ -127,26 +127,16 @@ public class FirstPersonController : BaseFirstPersonController
                 }
                 onDialogue = true;
             }
-            
-
-            if(workBenchState._onWorkBench) {
-                workBenchState.OnWorkBenchState(false);
-            }
-            if(viewSensor.ObstructedBy.gameObject.tag == "WorkBench" || !workBenchState._onWorkBench) {
-                Debug.Log(viewSensor.ObstructedBy.gameObject.tag);
-                workBenchState.StartWorkBenchState();
-            }
-            
         }
     }
     private void OnEnable()
     {
-        _control.Enable();
+        _control.Player.Enable();
     }
 
     private void OnDisable()
     {
-        _control.Disable();
+        _control.Player.Disable();
     }
 
 }
