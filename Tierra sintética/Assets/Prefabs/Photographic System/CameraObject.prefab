@@ -290,6 +290,7 @@ MonoBehaviour:
   rig: {fileID: 9057352035143175396}
   canvasCameraMenu: {fileID: 9057352035262918699}
   zoom: 0
+  myCam: {fileID: 9057352035573545029}
 --- !u!1 &9057352035262918699
 GameObject:
   m_ObjectHideFlags: 0

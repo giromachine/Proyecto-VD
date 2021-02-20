@@ -3464,6 +3464,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!20 &1471778500 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 9057352035573545029, guid: a8c86fc0a32b3d842b816983165890be,
+    type: 3}
+  m_PrefabInstance: {fileID: 9057352035616995719}
+  m_PrefabAsset: {fileID: 0}
 --- !u!850595691 &1518800410
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -3531,7 +3537,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh22454
+  m_Name: pb_Mesh19308
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3983,6 +3989,11 @@ PrefabInstance:
       propertyPath: cameraPointing
       value: 
       objectReference: {fileID: 874811643}
+    - target: {fileID: 9057352035143175407, guid: a8c86fc0a32b3d842b816983165890be,
+        type: 3}
+      propertyPath: myCam
+      value: 
+      objectReference: {fileID: 1471778500}
     - target: {fileID: 9057352035262918711, guid: a8c86fc0a32b3d842b816983165890be,
         type: 3}
       propertyPath: m_Camera

@@ -23,6 +23,7 @@ public class PhotographicCamera : MonoBehaviour
 
     public int zoom = 0;
     int initialZoom;
+    public Camera myCam;
 
     void start()
     {
@@ -83,10 +84,12 @@ public class PhotographicCamera : MonoBehaviour
             if (zoom <= 1)
             {
                 zoom += 1;
+                myCam.fieldOfView = myCam.fieldOfView - 20f;
             }
             else
             {
                 zoom = initialZoom;
+                myCam.fieldOfView = 60f;
             }            
         }
     }
