@@ -10,9 +10,10 @@ public class TableOfClues : MonoBehaviour
 {
     public TableOfCluesState state;
     InputMaster _control;
-    public Transform wbHeadPosition;
+    public Transform playerPosition;
     public GameObject player;
     public GameObject cam;
+
 
     private RaySensor viewSensor;
 
@@ -38,11 +39,17 @@ public class TableOfClues : MonoBehaviour
 
         state = TableOfCluesState.STARTSTATE;
         
-        //set up 
+        //setup 
         player.GetComponent<ECM.Components.MouseLook>().SetCursorLock(false);
         player.GetComponent<Collider>().enabled = false;
         player.GetComponent<ECM.Components.MouseLook>().enabled = false;
         player.GetComponent<FirstPersonController>().enabled = false; 
+        player.GetComponent<Transform>().transform.TransformDirection(Vector3.zero);
+
+        //Head movement position setup
+        LeanTween.moveLocal(player, playerPosition.transform.localPosition, 0.5f).setEaseOutQuad();
+        LeanTween.rotateY(player, playerPosition.transform.rotation.eulerAngles.y, 0.5f).setEaseOutQuad();
+        LeanTween.rotateX(cam, playerPosition.rotation.eulerAngles.x, 0.5f).setEaseOutQuad();
 
         Debug.Log("start Tabla de pistas");
 
