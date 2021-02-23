@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TableOfCluesSystem : MonoBehaviour
+public class DragObject : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()

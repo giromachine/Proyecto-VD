@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,16 +15,27 @@ public class TableOfClues : MonoBehaviour
     public GameObject player;
     public GameObject cam;
 
+    private ColgableObject question;
+    public RaySensor viewSensor;
 
-    private RaySensor viewSensor;
 
 
-    private void Awake() {
+    public virtual void Awake() {
 
         _control = new InputMaster();
         _control.Player.Interact.canceled += ctx => OnInteract(ctx);
+        
+        question = GameObject.FindGameObjectWithTag("Question").GetComponent<ColgableObject>();
 
-        viewSensor = GameObject.FindGameObjectWithTag("Sensor").GetComponent<RaySensor>();
+        viewSensor = GameObject.FindGameObjectWithTag("ViewSensor").GetComponent<RaySensor>();
+
+        /*foreach (GameObject aViewSensor in GameObject.FindGameObjectsWithTag("Sensor"))
+         {
+             if(aViewSensor.name.Equals("Player")){
+                 viewSensor = aViewSensor.GetComponent<RaySensor>();;
+                 break;
+             }
+        }*/
 
         state = TableOfCluesState.OUTSTATE;
     }
@@ -41,17 +53,19 @@ public class TableOfClues : MonoBehaviour
         
         //setup 
         player.GetComponent<ECM.Components.MouseLook>().SetCursorLock(false);
-        player.GetComponent<Collider>().enabled = false;
         player.GetComponent<ECM.Components.MouseLook>().enabled = false;
-        player.GetComponent<FirstPersonController>().enabled = false; 
-        player.GetComponent<Transform>().transform.TransformDirection(Vector3.zero);
+        player.GetComponent<Collider>().enabled = false;
+        player.GetComponent<FirstPersonController>().enabled = false;
 
         //Head movement position setup
         LeanTween.moveLocal(player, playerPosition.transform.localPosition, 0.5f).setEaseOutQuad();
         LeanTween.rotateY(player, playerPosition.transform.rotation.eulerAngles.y, 0.5f).setEaseOutQuad();
         LeanTween.rotateX(cam, playerPosition.rotation.eulerAngles.x, 0.5f).setEaseOutQuad();
+        
 
-        Debug.Log("start Tabla de pistas");
+        player.GetComponent<Rigidbody>().velocity = Vector3.zero; 
+
+        //Debug.Log("start Tabla de pistas");
 
         state = TableOfCluesState.NAVIGATING;
     }
@@ -59,13 +73,15 @@ public class TableOfClues : MonoBehaviour
     public void OnTableOfCluesState(){
 
         if (state == TableOfCluesState.QUITTING) {
-            Debug.Log("Fuera de Tabla de pistas");                
+                           
             QuittingTableOfCluesState();
-        }
-        //Navigation behaivior
-        if (state != TableOfCluesState.NAVIGATING)
+        } else if (state != TableOfCluesState.NAVIGATING) {
+            //Debug.Log("Fuera de Tabla de pistas"); 
             return;
+        }
 
+        //Navigation behaivior
+        question.OnClickDrag();
         Debug.Log("En Tabla de pistas");
 
     }
@@ -77,7 +93,7 @@ public class TableOfClues : MonoBehaviour
         player.GetComponent<Collider>().enabled = true;
         player.GetComponent<ECM.Components.MouseLook>().enabled = true;
         player.GetComponent<FirstPersonController>().enabled = true; 
-        Debug.Log("Quiting Tabla de pistas");
+        //Debug.Log("Quiting Tabla de pistas");
         
         state = TableOfCluesState.OUTSTATE;
     }

@@ -358,6 +358,52 @@ public class @InputMaster : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""TableOfClues"",
+            ""id"": ""58b96a57-4966-4a9d-8eff-424d29e46526"",
+            ""actions"": [
+                {
+                    ""name"": ""MousePosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""03a1adba-5feb-48f6-a50f-a0d0a6c33346"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""LeftClick"",
+                    ""type"": ""Button"",
+                    ""id"": ""c59c06df-e085-45b6-afa3-4429d6ad8c93"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""4cdc56aa-b56a-4dc3-819e-8eca2c7dc41f"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Teclado y Ratón"",
+                    ""action"": ""MousePosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""45058c0b-5b2f-4620-a206-fd74a44f2de0"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Teclado y Ratón"",
+                    ""action"": ""LeftClick"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -398,6 +444,10 @@ public class @InputMaster : IInputActionCollection, IDisposable
         m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
         m_Debug_LeftClick = m_Debug.FindAction("LeftClick", throwIfNotFound: true);
         m_Debug_Escape = m_Debug.FindAction("Escape", throwIfNotFound: true);
+        // TableOfClues
+        m_TableOfClues = asset.FindActionMap("TableOfClues", throwIfNotFound: true);
+        m_TableOfClues_MousePosition = m_TableOfClues.FindAction("MousePosition", throwIfNotFound: true);
+        m_TableOfClues_LeftClick = m_TableOfClues.FindAction("LeftClick", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -613,6 +663,47 @@ public class @InputMaster : IInputActionCollection, IDisposable
         }
     }
     public DebugActions @Debug => new DebugActions(this);
+
+    // TableOfClues
+    private readonly InputActionMap m_TableOfClues;
+    private ITableOfCluesActions m_TableOfCluesActionsCallbackInterface;
+    private readonly InputAction m_TableOfClues_MousePosition;
+    private readonly InputAction m_TableOfClues_LeftClick;
+    public struct TableOfCluesActions
+    {
+        private @InputMaster m_Wrapper;
+        public TableOfCluesActions(@InputMaster wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MousePosition => m_Wrapper.m_TableOfClues_MousePosition;
+        public InputAction @LeftClick => m_Wrapper.m_TableOfClues_LeftClick;
+        public InputActionMap Get() { return m_Wrapper.m_TableOfClues; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TableOfCluesActions set) { return set.Get(); }
+        public void SetCallbacks(ITableOfCluesActions instance)
+        {
+            if (m_Wrapper.m_TableOfCluesActionsCallbackInterface != null)
+            {
+                @MousePosition.started -= m_Wrapper.m_TableOfCluesActionsCallbackInterface.OnMousePosition;
+                @MousePosition.performed -= m_Wrapper.m_TableOfCluesActionsCallbackInterface.OnMousePosition;
+                @MousePosition.canceled -= m_Wrapper.m_TableOfCluesActionsCallbackInterface.OnMousePosition;
+                @LeftClick.started -= m_Wrapper.m_TableOfCluesActionsCallbackInterface.OnLeftClick;
+                @LeftClick.performed -= m_Wrapper.m_TableOfCluesActionsCallbackInterface.OnLeftClick;
+                @LeftClick.canceled -= m_Wrapper.m_TableOfCluesActionsCallbackInterface.OnLeftClick;
+            }
+            m_Wrapper.m_TableOfCluesActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MousePosition.started += instance.OnMousePosition;
+                @MousePosition.performed += instance.OnMousePosition;
+                @MousePosition.canceled += instance.OnMousePosition;
+                @LeftClick.started += instance.OnLeftClick;
+                @LeftClick.performed += instance.OnLeftClick;
+                @LeftClick.canceled += instance.OnLeftClick;
+            }
+        }
+    }
+    public TableOfCluesActions @TableOfClues => new TableOfCluesActions(this);
     private int m_TecladoyRatónSchemeIndex = -1;
     public InputControlScheme TecladoyRatónScheme
     {
@@ -642,5 +733,10 @@ public class @InputMaster : IInputActionCollection, IDisposable
     {
         void OnLeftClick(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
+    }
+    public interface ITableOfCluesActions
+    {
+        void OnMousePosition(InputAction.CallbackContext context);
+        void OnLeftClick(InputAction.CallbackContext context);
     }
 }

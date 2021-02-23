@@ -345,6 +345,52 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "TableOfClues",
+            "id": "58b96a57-4966-4a9d-8eff-424d29e46526",
+            "actions": [
+                {
+                    "name": "MousePosition",
+                    "type": "Value",
+                    "id": "03a1adba-5feb-48f6-a50f-a0d0a6c33346",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "LeftClick",
+                    "type": "Button",
+                    "id": "c59c06df-e085-45b6-afa3-4429d6ad8c93",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4cdc56aa-b56a-4dc3-819e-8eca2c7dc41f",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Teclado y Ratón",
+                    "action": "MousePosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "45058c0b-5b2f-4620-a206-fd74a44f2de0",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Teclado y Ratón",
+                    "action": "LeftClick",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [
