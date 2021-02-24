@@ -9,33 +9,32 @@ using UnityEngine.InputSystem;
 public enum TableOfCluesState {STARTSTATE, NAVIGATING, QUITTING, OUTSTATE}
 public class TableOfClues : MonoBehaviour
 {
+    static public TableOfClues S;
     public TableOfCluesState state;
     InputMaster _control;
     public Transform playerPosition;
-    public GameObject player;
-    public GameObject cam;
+    private GameObject player;
 
-    private ColgableObject question;
+    private List<ColgableObject> questions;
     public RaySensor viewSensor;
 
 
 
     public virtual void Awake() {
+        S = this;
 
         _control = new InputMaster();
         _control.Player.Interact.canceled += ctx => OnInteract(ctx);
         
-        question = GameObject.FindGameObjectWithTag("Question").GetComponent<ColgableObject>();
+        player = GameObject.FindGameObjectWithTag("Player");
 
-        viewSensor = GameObject.FindGameObjectWithTag("ViewSensor").GetComponent<RaySensor>();
-
-        /*foreach (GameObject aViewSensor in GameObject.FindGameObjectsWithTag("Sensor"))
-         {
-             if(aViewSensor.name.Equals("Player")){
-                 viewSensor = aViewSensor.GetComponent<RaySensor>();;
-                 break;
-             }
-        }*/
+        foreach (GameObject aColgableObj in GameObject.FindGameObjectsWithTag("Question"))
+        {
+            if (questions == null) {
+            questions = new List<ColgableObject>();
+        }
+            questions.Add(aColgableObj.GetComponent<ColgableObject>());
+        }
 
         state = TableOfCluesState.OUTSTATE;
     }
@@ -60,7 +59,7 @@ public class TableOfClues : MonoBehaviour
         //Head movement position setup
         LeanTween.moveLocal(player, playerPosition.transform.localPosition, 0.5f).setEaseOutQuad();
         LeanTween.rotateY(player, playerPosition.transform.rotation.eulerAngles.y, 0.5f).setEaseOutQuad();
-        LeanTween.rotateX(cam, playerPosition.rotation.eulerAngles.x, 0.5f).setEaseOutQuad();
+        LeanTween.rotateX(Camera.main.gameObject, playerPosition.rotation.eulerAngles.x, 0.5f).setEaseOutQuad();
         
 
         player.GetComponent<Rigidbody>().velocity = Vector3.zero; 
@@ -81,7 +80,10 @@ public class TableOfClues : MonoBehaviour
         }
 
         //Navigation behaivior
-        question.OnClickDrag();
+        foreach (ColgableObject colgObj in questions) {
+            colgObj.OnClickDrag();
+        }
+        
         Debug.Log("En Tabla de pistas");
 
     }
