@@ -25,6 +25,9 @@ public class PhotographicCamera : MonoBehaviour
     int initialZoom;
     public Camera myCam;
 
+    public float mouseScrollY;
+    public float newScrollY;
+
     void start()
     {
         initialZoom = zoom;
@@ -160,6 +163,16 @@ public class PhotographicCamera : MonoBehaviour
                 this.transform.position = cameraPointing.position;
                 this.transform.rotation = cameraPointing.rotation;
             }
+        } 
+        
+        if(mouseScrollY > 0)
+        {
+            Debug.Log("Scrolled Up");
+        }
+
+        if (mouseScrollY < 0)
+        {
+            Debug.Log("Scrolled Down");
         }
     }
 }
