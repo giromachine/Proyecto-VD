@@ -873,6 +873,12 @@ Light:
     type: 3}
   m_PrefabInstance: {fileID: 7231985315597089979}
   m_PrefabAsset: {fileID: 0}
+--- !u!20 &771954063 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 6355671714747817020, guid: 77c4771d6a4e3524c8857b737692e6f5,
+    type: 3}
+  m_PrefabInstance: {fileID: 85905089}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &863668976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1058,7 +1064,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh66060
+  m_Name: pb_Mesh29324
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1397,7 +1403,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh66076
+  m_Name: pb_Mesh29442
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1789,7 +1795,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh66032
+  m_Name: pb_Mesh29296
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1975,7 +1981,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh66022
+  m_Name: pb_Mesh29286
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2256,6 +2262,21 @@ PrefabInstance:
       propertyPath: cameraPointing
       value: 
       objectReference: {fileID: 2014788706}
+    - target: {fileID: 9057352035262918699, guid: a8c86fc0a32b3d842b816983165890be,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9057352035262918711, guid: a8c86fc0a32b3d842b816983165890be,
+        type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 771954063}
+    - target: {fileID: 9057352035262918711, guid: a8c86fc0a32b3d842b816983165890be,
+        type: 3}
+      propertyPath: m_RenderMode
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 9057352036543624177, guid: a8c86fc0a32b3d842b816983165890be,
         type: 3}
       propertyPath: field of view

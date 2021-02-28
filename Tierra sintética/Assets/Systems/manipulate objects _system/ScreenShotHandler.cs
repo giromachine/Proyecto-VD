@@ -15,7 +15,7 @@ public class ScreenShotHandler : MonoBehaviour
 
     public bool takeHiResShot = false;
 
-    public Image img1,img2,img3,img4;
+    public Image img1,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,img12;
 
     private Image imagen;
 
@@ -59,6 +59,22 @@ public class ScreenShotHandler : MonoBehaviour
             imagen = img3;
         if (photoNumber == 4)
             imagen = img4;
+        if (photoNumber == 5)
+            imagen = img5;
+        if (photoNumber == 6)
+            imagen = img6;
+        if (photoNumber == 7)
+            imagen = img7;
+        if (photoNumber == 8)
+            imagen = img8;
+        if (photoNumber == 9)
+            imagen = img9;
+        if (photoNumber == 10)
+            imagen = img10;
+        if (photoNumber == 11)
+            imagen = img11;
+        if (photoNumber == 12)
+            imagen = img12;
 
         RenderTexture rt = new RenderTexture(resWidth, resHeight, 24);
         myCamera.targetTexture = rt;
@@ -82,7 +98,7 @@ public class ScreenShotHandler : MonoBehaviour
         takeHiResShot = false;
 
 
-        if (photoNumber == 4)
+        if (photoNumber == 12)
         {
             photoNumber = 0;
         }

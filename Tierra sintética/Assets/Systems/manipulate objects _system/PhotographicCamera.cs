@@ -28,6 +28,8 @@ public class PhotographicCamera : MonoBehaviour
     public float mouseScrollY;
     public float newScrollY;
 
+    private GameObject player;
+
     void start()
     {
         initialZoom = zoom;
@@ -35,6 +37,8 @@ public class PhotographicCamera : MonoBehaviour
 
     void Awake()
     {
+        player = GameObject.FindGameObjectWithTag("Player");
+
         _control = new InputMaster();
 
         _control.Player.Interact.performed += ctx => InteractAction(ctx);
@@ -114,20 +118,30 @@ public class PhotographicCamera : MonoBehaviour
 
     void Menu(InputAction.CallbackContext context)
     {
-        if (taken)
+        if (taken && pointingCamera)
         {
             if (!menuCamera)
             {
                 Debug.Log("Menu");
                 menuCamera = true;
                 canvasCameraMenu.SetActive(true);
+                //Desbloquear cursor
+                player.GetComponent<ECM.Components.MouseLook>().SetCursorLock(false);
+                player.GetComponent<ECM.Components.MouseLook>().enabled = false;
+                //player.GetComponent<Collider>().enabled = false;
+                //player.GetComponent<FirstPersonController>().enabled = false;
             }
             else
             {
                 Debug.Log("NoMenu");
                 menuCamera = false;
                 canvasCameraMenu.SetActive(false);
-            }           
+                //Bloquear cursor
+                player.GetComponent<ECM.Components.MouseLook>().SetCursorLock(true);
+                player.GetComponent<ECM.Components.MouseLook>().enabled = true;
+                //player.GetComponent<Collider>().enabled = true;
+                //player.GetComponent<FirstPersonController>().enabled = true;
+            }
         }
     }
 
@@ -164,15 +178,5 @@ public class PhotographicCamera : MonoBehaviour
                 this.transform.rotation = cameraPointing.rotation;
             }
         } 
-        
-        if(mouseScrollY > 0)
-        {
-            Debug.Log("Scrolled Up");
-        }
-
-        if (mouseScrollY < 0)
-        {
-            Debug.Log("Scrolled Down");
-        }
     }
 }
