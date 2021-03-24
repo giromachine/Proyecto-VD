@@ -103,4 +103,9 @@ public class ScreenShotHandler : MonoBehaviour
             photoNumber = 0;
         }
     }
+
+    public void ShowPhoto()
+    {
+
+    }
 }
