@@ -254,7 +254,7 @@ namespace ECM.Components
                 _isCursorLocked = false;
                 
             }
-            else if (!onLeftClick && FindObjectOfType<TableOfClues>().state == TableOfCluesState.OUTSTATE) {
+            else if (!onLeftClick) {
                 _isCursorLocked = true;
                 onEscape = false;
             }
