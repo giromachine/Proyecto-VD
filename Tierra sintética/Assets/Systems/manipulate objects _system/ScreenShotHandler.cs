@@ -16,8 +16,13 @@ public class ScreenShotHandler : MonoBehaviour
     public bool takeHiResShot = false;
 
     public Image img1,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,img12;
+    public Image photo;
+    public GameObject canvasShowPhoto;
 
     private Image imagen;
+
+    public float timer;
+    public bool showPhoto;
 
     public void Start()
     {
@@ -39,9 +44,23 @@ public class ScreenShotHandler : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (takeHiResShot)
+        if (takeHiResShot && !showPhoto)
         {
             ScreenShot();
+        }
+
+        if (showPhoto)
+        {
+            canvasShowPhoto.SetActive(true);
+
+            timer += Time.deltaTime;
+
+            if (timer >= 2)
+            {
+                timer = 0;
+                canvasShowPhoto.SetActive(false);
+                showPhoto = false;
+            }
         }
     }
 
@@ -86,6 +105,7 @@ public class ScreenShotHandler : MonoBehaviour
         //
         Sprite sprite = Sprite.Create(screenShot, new Rect(0, 0, screenShot.width, screenShot.height), new Vector2(.5f, .5f));
         imagen.sprite = sprite;
+        photo.sprite = sprite;
         //
         myCamera.targetTexture = null;
         RenderTexture.active = null;
@@ -97,6 +117,7 @@ public class ScreenShotHandler : MonoBehaviour
         Debug.Log(string.Format("Took screenshot to: {0}", filename));
         takeHiResShot = false;
 
+        showPhoto = true;
 
         if (photoNumber == 12)
         {
@@ -104,8 +125,4 @@ public class ScreenShotHandler : MonoBehaviour
         }
     }
 
-    public void ShowPhoto()
-    {
-
-    }
 }

@@ -866,7 +866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7461478571133937685
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2354,3 +2354,7 @@ MonoBehaviour:
   img10: {fileID: 7362344481632033495}
   img11: {fileID: 1521130134328352301}
   img12: {fileID: 8535003082110431824}
+  photo: {fileID: 5362800335242418144}
+  canvasShowPhoto: {fileID: 2823585378085211476}
+  timer: 0
+  showPhoto: 0
