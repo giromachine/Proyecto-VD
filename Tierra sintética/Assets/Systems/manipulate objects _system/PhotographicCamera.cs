@@ -24,6 +24,7 @@ public class PhotographicCamera : MonoBehaviour
     public int zoom = 0;
     int initialZoom;
     public Camera myCam;
+    public Camera cameraDisplay2;
 
     public float mouseScrollY;
     public float newScrollY;
@@ -92,11 +93,13 @@ public class PhotographicCamera : MonoBehaviour
             {
                 zoom += 1;
                 myCam.fieldOfView = myCam.fieldOfView - 20f;
+                cameraDisplay2.fieldOfView = cameraDisplay2.fieldOfView - 20f;
             }
             else
             {
                 zoom = initialZoom;
                 myCam.fieldOfView = 60f;
+                cameraDisplay2.fieldOfView = 60f;
             }            
         }
     }

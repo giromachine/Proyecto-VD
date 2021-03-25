@@ -1930,6 +1930,7 @@ MonoBehaviour:
   canvasCameraMenu: {fileID: 9057352035262918699}
   zoom: 0
   myCam: {fileID: 9057352035573545029}
+  cameraDisplay2: {fileID: 9057352036543624177}
   mouseScrollY: 0
   newScrollY: 0
 --- !u!1 &9057352035262918699
@@ -2088,7 +2089,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 26.991467
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
