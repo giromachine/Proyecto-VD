@@ -17,6 +17,7 @@ public class ScreenShotHandler : MonoBehaviour
 
     public Image img1,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,img12;
     public Image photo;
+
     public GameObject canvasShowPhoto;
 
     private Image imagen;
@@ -71,7 +72,10 @@ public class ScreenShotHandler : MonoBehaviour
         photoNumber = photoNumber + 1;
 
         if (photoNumber == 1)
+        {
             imagen = img1;
+        }
+
         if (photoNumber == 2)
             imagen = img2;
         if (photoNumber == 3)
